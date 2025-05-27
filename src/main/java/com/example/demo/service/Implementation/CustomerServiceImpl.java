@@ -1,18 +1,25 @@
 package com.example.demo.service.Implementation;
 
+import com.example.demo.dto.CustomerDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.service.CustomerService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository,
+                               PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -21,15 +28,20 @@ public class CustomerServiceImpl implements CustomerService {
         return appUserOptional.orElse(null);
     }
 
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    @Override
+    public Customer getCustomerById(Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        return customerOptional.orElse(null);
     }
 
     @Override
-    public Customer createCustomer(Customer Customer) {
-        return customerRepository.save(Customer);
+    public Customer createCustomer(CustomerDTO dto) {
+        Customer customer = new Customer();
+        customer.setEmail(dto.getEmail());
+        customer.setName(dto.getName());
+        customer.setPassword(passwordEncoder.encode(dto.getPassword())); // hashujemy
+        return customerRepository.save(customer);
     }
-
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
