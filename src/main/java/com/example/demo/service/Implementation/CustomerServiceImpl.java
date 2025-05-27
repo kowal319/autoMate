@@ -1,17 +1,17 @@
 package com.example.demo.service.Implementation;
 
 import com.example.demo.entity.Customer;
-import com.example.demo.repository.customerRepository;
-import com.example.demo.service.customerService;
+import com.example.demo.repository.CustomerRepository;
+import com.example.demo.service.CustomerService;
 
 import java.util.List;
 import java.util.Optional;
 
-public class customerServiceImpl implements customerService {
+public class CustomerServiceImpl implements CustomerService {
 
-    private customerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
-    public customerServiceImpl(customerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -21,13 +21,17 @@ public class customerServiceImpl implements customerService {
         return appUserOptional.orElse(null);
     }
 
+    public Optional<Customer> getCustomerById(Long id) {
+        return customerRepository.findById(id);
+    }
+
     @Override
-    public Customer createAppUser(Customer Customer) {
+    public Customer createCustomer(Customer Customer) {
         return customerRepository.save(Customer);
     }
 
     @Override
-    public List<Customer> getAllAppUsers() {
+    public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
