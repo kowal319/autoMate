@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.view;
 
 import com.example.demo.dto.CustomerDTO;
 import com.example.demo.entity.Customer;
@@ -9,20 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
-public class CustomerController {
+@RequestMapping("/customers")
+public class CustomerViewController {
 
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService){
+    public CustomerViewController(CustomerService customerService){
         this.customerService = customerService;
     }
 
-    @GetMapping("customers")
+    @GetMapping()
     public String listAllCustomers(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
@@ -36,12 +38,18 @@ public class CustomerController {
         return "customerId";
     }
 
-    @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody @Valid CustomerDTO customerDTO) {
-        Customer saved = customerService.createCustomer(customerDTO);
-        return ResponseEntity.ok(saved);
+    @PostMapping("delete/{id}")
+    public String deleteCustomer(@PathVariable Long id){
+        customerService.deleteCustomer(id);
+        return "redirect:/customers";
     }
 
-
+    @PostMapping("/addCustomer")
+    public String createCustomer(@ModelAttribute CustomerDTO customerDTO, RedirectAttributes redirectAttributes){
+        customerService.createCustomer(customerDTO);
+        redirectAttributes.addFlashAttribute("successMessage", "uzytkownik dodany");
+        return "redirect:/customers";
+    }
 
 }
+

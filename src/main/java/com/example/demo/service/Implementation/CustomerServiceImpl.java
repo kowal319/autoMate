@@ -48,10 +48,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(Long id, Customer updateUser) {
-        return null;
-    }
+    public Customer updateCustomer(Long id, CustomerDTO updatedCustomerDTO) {
+        Customer existing = customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono klienta"));
 
+        existing.setName(updatedCustomerDTO.getName());
+        existing.setEmail(updatedCustomerDTO.getEmail());
+        return customerRepository.save(existing);
+    }
     @Override
     public String deleteCustomer(Long id) {
         Optional<Customer> appUserOptional = customerRepository.findById(id);
