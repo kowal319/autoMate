@@ -65,10 +65,8 @@
                       <i class="fas fa-trash-alt"></i> Usuń
                     </button>
                   </form>
-                  <a th:href="@{/customers/info/{id}(id=${customer.id})}">
-                    <button type="button" class="btn btn-info">
-                      <i class="fas fa-info-circle"></i> Info
-                    </button>
+                  <a th:href="@{/customers/infoCustomer/{id}(id=${customer.id})}" class="btn btn-info">
+                    <i class="fas fa-info-circle"></i> Info
                   </a>
                   <a th:href="@{/customers/editCustomer/{id}(id=${customer.id})}" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Edytuj

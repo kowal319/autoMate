@@ -32,11 +32,11 @@ public class CustomerViewController {
         return "admin/customers";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/infoCustomer/{id}")
     public String getCustomerById(@PathVariable Long id, Model model) {
         Customer customer = customerService.getCustomerById(id);
         model.addAttribute("customer", customer);
-        return "admin/customerId";
+        return "admin/infoCustomer";
     }
 
     @PostMapping("delete/{id}")
