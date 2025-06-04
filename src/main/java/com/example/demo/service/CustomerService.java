@@ -17,5 +17,7 @@ public interface CustomerService {
     Customer updateCustomer(Long id, CustomerDTO updatedCustomerDTO);
 
     String deleteCustomer(Long id);
+
+    void changePassword(Long id, String newPassword);
 }
 

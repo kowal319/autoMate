@@ -10,11 +10,12 @@ import lombok.Setter;
 @Setter
 public class CustomerDTO {
 
+    private Long id;
+
     @Email(message = "Nieprawidłowy email")
     @NotBlank(message = "Email nie może być pusty")
     private String email;
 
-    @NotBlank(message = "Hasło nie może być puste")
     @Size(min = 6)
     private String password;
 

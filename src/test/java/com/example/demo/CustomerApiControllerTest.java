@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -99,10 +100,32 @@ class CustomerApiControllerTest {
     void deleteCustomer_shouldReturnNoContent() {
         Long id = 1L;
 
-
         ResponseEntity<Void> response = customerApiController.deleteCustomer(id);
 
         assertEquals(204, response.getStatusCodeValue());
         verify(customerService, times(1)).deleteCustomer(id);
+    }
+
+    @Test
+    void changePasswordCustomer_wrongConfirmPassword(){
+        Long id = 1L;
+        String password = "newPassword";
+        String confirmPassword = "confirmPassword";
+
+        ResponseEntity<?> response = customerApiController.changePassword(id, password, confirmPassword);        assertEquals(400, response.getStatusCodeValue());
+        verify(customerService, never()).changePassword(anyLong(), anyString());
+    }
+
+    @Test
+    void changePasswordCustomer_correct() {
+        Long id = 1L;
+        String password = "newPassword";
+        String confirmPassword = "newPassword";
+
+        ResponseEntity<?> response = customerApiController.changePassword(id, password, confirmPassword);
+
+        assertEquals(204, response.getStatusCodeValue());
+
+        verify(customerService, times(1)).changePassword(id, password);
     }
 }

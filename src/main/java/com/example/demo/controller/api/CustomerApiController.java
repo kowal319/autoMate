@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -55,6 +56,16 @@ public class CustomerApiController {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/changePassword/{id}")
+    public ResponseEntity<?> changePassword(@PathVariable Long id,
+                                            @RequestParam String password,
+                                            @RequestParam String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            return ResponseEntity.badRequest().body("Hasła nie są takie same");
+        }
+
+        customerService.changePassword(id, password);
+        return ResponseEntity.noContent().build();
+    }
 }
-
-

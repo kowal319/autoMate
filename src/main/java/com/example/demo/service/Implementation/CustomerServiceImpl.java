@@ -51,9 +51,12 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateCustomer(Long id, CustomerDTO updatedCustomerDTO) {
         Customer existing = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono klienta"));
-
+        if (updatedCustomerDTO.getPassword() != null && !updatedCustomerDTO.getPassword().isBlank()) {
+            existing.setPassword(passwordEncoder.encode(updatedCustomerDTO.getPassword()));
+        }
         existing.setName(updatedCustomerDTO.getName());
         existing.setEmail(updatedCustomerDTO.getEmail());
+
         return customerRepository.save(existing);
     }
     @Override
@@ -66,5 +69,13 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             return "User with id: " + id + " not found";
         }
+    }
+    @Override
+    public void changePassword(Long id, String newPassword) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono klienta"));
+
+        customer.setPassword(passwordEncoder.encode(newPassword));
+        customerRepository.save(customer);
     }
 }
