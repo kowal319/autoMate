@@ -24,8 +24,8 @@ public class VehicleApiController {
 
     @GetMapping
     public ResponseEntity<List<Vehicle>> getAllVehicles(){
-        List<Vehicle> vehicleList = vehicleService.getAllVehicles();
-        return ResponseEntity.ok(vehicleList);
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+        return ResponseEntity.ok(vehicles);
     }
 
     @GetMapping("/{id}")

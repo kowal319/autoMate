@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 public enum FuelType {
-    GASOLINE,
+    PETROL,
     DIESEL,
     ELECTRIC,
     HYBRID,

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vehicles List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-group .btn {
+            width: 100px;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .btn-danger, .btn-info, .btn-primary {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+<br />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Vehicles List</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="/vehicles/createVehicle" class="btn btn-success">
+                            <i class="fas fa-user-plus"></i> Create Vehicle
+                        </a>
+                    </div>
+
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Vin</th>
+                            <th>Operacje</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="vehicle : ${vehicles}">
+                            <td th:text="${vehicle.id}"></td>
+                            <td th:text="${vehicle.brand}"></td>
+                            <td th:text="${vehicle.model}"></td>
+                            <td th:text="${vehicle.vin}"></td>
+
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Operations">
+                                    <form th:action="@{/vehicles/delete/{id}(id=${vehicle.id})}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                    <a th:href="@{/vehicles/infoVehicle/{id}(id=${vehicle.id})}" class="btn btn-info">
+                                        <i class="fas fa-info-circle"></i> Info
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
