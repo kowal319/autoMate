@@ -17,14 +17,14 @@
     <div class="col" th:each="vehicle : ${vehicles}">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
-          <h5 class="card-title" th:text="${vehicle.brand} + ' ' + ${vehicle.model}"></h5>
+          <h5 class="card-title" th:text="|${vehicle.brand} ${vehicle.model}|"></h5>
           <p class="card-text">
+            <strong>ID pojazdu:</strong> <span th:text="${vehicle.id}"></span><br/>
             <strong>Rok produkcji:</strong> <span th:text="${vehicle.year}"></span><br/>
-            <strong>Nr rejestracyjny:</strong> <span th:text="${vehicle.licensePlate}"></span>
           </p>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}" class="btn btn-sm btn-primary">
+          <a th:href="@{/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-sm btn-primary">
             <i class="fas fa-edit"></i> Edytuj
           </a>
           <form th:action="@{/vehicles/delete/{id}(id=${vehicle.id})}" method="post" onsubmit="return confirm('Na pewno usunąć pojazd?');">
@@ -40,7 +40,6 @@
       <p class="text-muted">Brak pojazdów do wyświetlenia.</p>
     </div>
   </div>
-
   <div class="mt-4">
     <a th:href="@{/vehicles/add/{customerId}(customerId=${customer.id})}" class="btn btn-success">
       <i class="fas fa-plus"></i> Dodaj nowy pojazd

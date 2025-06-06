@@ -2,7 +2,9 @@ package com.example.demo.controller.view;
 
 import com.example.demo.dto.CustomerDTO;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Vehicle;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
 import org.apache.catalina.util.CustomObjectInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,13 @@ import java.util.List;
 public class CustomerViewController {
 
     private final CustomerService customerService;
+    private final VehicleService vehicleService;
+
 
     @Autowired
-    public CustomerViewController(CustomerService customerService){
+    public CustomerViewController(CustomerService customerService, VehicleService vehicleService){
         this.customerService = customerService;
+        this.vehicleService = vehicleService;
     }
 
     @GetMapping()
@@ -36,6 +41,9 @@ public class CustomerViewController {
     public String getCustomerById(@PathVariable Long id, Model model) {
         Customer customer = customerService.getCustomerById(id);
         model.addAttribute("customer", customer);
+
+        List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(id);
+        model.addAttribute("vehicles", vehicles);
         return "admin/infoCustomer";
     }
 

@@ -13,6 +13,7 @@ public class VehicleDTO {
     private Long id;
     private String brand;
     private String model;
+    private String registrationPlate;
     private int year;
     private String vin;
     private double engineCapacity;

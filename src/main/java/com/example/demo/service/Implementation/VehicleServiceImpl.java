@@ -9,7 +9,6 @@ import com.example.demo.repository.VehicleRepository;
 import com.example.demo.service.VehicleService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +29,7 @@ public class VehicleServiceImpl implements VehicleService {
        Vehicle vehicle = new Vehicle();
        vehicle.setBrand(vehicleDTO.getBrand());
        vehicle.setModel(vehicleDTO.getModel());
+       vehicle.setRegistrationPlate(vehicleDTO.getRegistrationPlate());
        vehicle.setVin(vehicleDTO.getVin());
        vehicle.setEngineCapacity(vehicleDTO.getEngineCapacity());
        vehicle.setFuelType(vehicleDTO.getFuelType());
@@ -60,6 +60,7 @@ public class VehicleServiceImpl implements VehicleService {
         .orElseThrow(() -> new RuntimeException("Not found"));
         existing.setBrand(updatedVehicleDTO.getBrand());
         existing.setModel(updatedVehicleDTO.getModel());
+        existing.setRegistrationPlate(updatedVehicleDTO.getRegistrationPlate());
         existing.setVin(updatedVehicleDTO.getVin());
         existing.setYear(updatedVehicleDTO.getYear());
         existing.setFuelType(updatedVehicleDTO.getFuelType());
@@ -83,5 +84,10 @@ public class VehicleServiceImpl implements VehicleService {
         } else{
             return "Vehicle with id " + id + " has not found";
         }
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByCustomerId(Long customerId) {
+        return vehicleRepository.findByCustomerId(customerId);
     }
 }

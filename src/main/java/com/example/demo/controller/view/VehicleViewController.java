@@ -80,6 +80,7 @@ public class VehicleViewController {
         vehicleDTO.setId(vehicle.getId());
         vehicleDTO.setBrand(vehicle.getBrand());
         vehicleDTO.setModel(vehicle.getModel());
+        vehicleDTO.setRegistrationPlate(vehicle.getRegistrationPlate());
         vehicleDTO.setYear(vehicle.getYear());
         vehicleDTO.setVin(vehicle.getVin());
         vehicleDTO.setEngineCapacity(vehicle.getEngineCapacity());
