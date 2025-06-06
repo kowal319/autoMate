@@ -15,6 +15,16 @@
         <div class="card-body">
             <form th:action="@{/vehicles/createVehicle}" th:object="${vehicleDTO}" method="post">
                 <div class="mb-3">
+                    <label for="customerId" class="form-label">Customer</label>
+                    <select class="form-select" id="customerId" th:field="*{customerId}" required>
+                        <option value="" disabled selected>-- Select customer --</option>
+                        <option th:each="customer : ${customers}"
+                                th:value="${customer.id}"
+                                th:text="${customer.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="brand" class="form-label">Brand</label>
                     <input type="text" class="form-control" id="brand" th:field="*{brand}" required />
                 </div>

@@ -2,7 +2,9 @@ package com.example.demo.service.Implementation;
 
 
 import com.example.demo.dto.VehicleDTO;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.Vehicle;
+import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.VehicleRepository;
 import com.example.demo.service.VehicleService;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
+    private final CustomerRepository customerRepository;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository) {
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.customerRepository = customerRepository;
     }
 
 
@@ -31,7 +35,12 @@ public class VehicleServiceImpl implements VehicleService {
        vehicle.setFuelType(vehicleDTO.getFuelType());
        vehicle.setYear(vehicleDTO.getYear());
        vehicle.setDescription(vehicleDTO.getDescription());
-       return vehicleRepository.save(vehicle);
+
+       Customer customer = customerRepository.findById(vehicleDTO.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        vehicle.setCustomer(customer);
+
+        return vehicleRepository.save(vehicle);
     }
 
     @Override
@@ -56,6 +65,11 @@ public class VehicleServiceImpl implements VehicleService {
         existing.setFuelType(updatedVehicleDTO.getFuelType());
         existing.setEngineCapacity(updatedVehicleDTO.getEngineCapacity());
         existing.setDescription(updatedVehicleDTO.getDescription());
+
+        Customer customer = customerRepository.findById(updatedVehicleDTO.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        existing.setCustomer(customer);
+
         return vehicleRepository.save(existing);
     }
 

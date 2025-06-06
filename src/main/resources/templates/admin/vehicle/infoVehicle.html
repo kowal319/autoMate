@@ -15,6 +15,12 @@
     </div>
     <div class="card-body">
       <dl class="row">
+        <dt class="col-sm-3">Vehicle ID</dt>
+        <dd class="col-sm-9" th:text="${vehicle.id}">Vehicle ID</dd>
+
+        <dt class="col-sm-3">Owner</dt>
+        <dd class="col-sm-9" th:text="${vehicle.customer.name}">Owner Name</dd>
+
         <dt class="col-sm-3">Brand</dt>
         <dd class="col-sm-9" th:text="${vehicle.brand}">Brand</dd>
 
@@ -36,7 +42,6 @@
         <dt class="col-sm-3">Description</dt>
         <dd class="col-sm-9" th:text="${vehicle.description}">Description</dd>
       </dl>
-
       <a th:href="@{/vehicles}" class="btn btn-secondary mt-3">Back to list</a>
       <a th:href="@{/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-primary mt-3 ms-2">Edit</a>
     </div>

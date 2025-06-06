@@ -17,6 +17,17 @@
             <form th:action="@{/vehicles/editVehicle/{id}(id=${vehicleDTO.id})}" th:object="${vehicleDTO}" method="post">
                 <input type="hidden" th:field="*{id}" />
                 <div class="mb-3">
+                    <label for="customerId" class="form-label">Customer ID</label>
+                    <select class="form-select" id="customerId" th:field="*{customerId}" required>
+                        <option value="" disabled th:selected="${vehicleDTO.customerId == null}">-- Select customer ID --</option>
+                        <option th:each="customer : ${customers}"
+                                th:value="${customer.id}"
+                                th:text="${customer.id}"
+                                th:selected="${customer.id == vehicleDTO.customerId}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="brand" class="form-label">Brand</label>
                     <input type="text" class="form-control" id="brand" th:field="*{brand}" required />
                 </div>

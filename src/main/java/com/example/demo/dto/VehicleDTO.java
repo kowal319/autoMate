@@ -18,5 +18,6 @@ public class VehicleDTO {
     private double engineCapacity;
     private FuelType fuelType;
     private String description;
+    private Long customerId;
 
 }

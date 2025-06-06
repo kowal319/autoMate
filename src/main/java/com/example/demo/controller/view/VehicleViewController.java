@@ -3,6 +3,7 @@ package com.example.demo.controller.view;
 import com.example.demo.dto.VehicleDTO;
 import com.example.demo.entity.FuelType;
 import com.example.demo.entity.Vehicle;
+import com.example.demo.service.CustomerService;
 import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ import java.util.stream.IntStream;
 public class VehicleViewController {
 
     private final VehicleService vehicleService;
+    private final CustomerService customerService;
 
     @Autowired
-    public VehicleViewController(VehicleService vehicleService) {
+    public VehicleViewController(VehicleService vehicleService, CustomerService customerService) {
         this.vehicleService = vehicleService;
+        this.customerService = customerService;
     }
 
     @GetMapping
@@ -58,6 +61,7 @@ public class VehicleViewController {
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
         model.addAttribute("years", years);
+        model.addAttribute("customers", customerService.getAllCustomers());
 
         return "admin/vehicle/createVehicle";
     }
@@ -90,6 +94,12 @@ public class VehicleViewController {
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
         model.addAttribute("years", years);
+
+        if (vehicle.getCustomer() != null) {
+            vehicleDTO.setCustomerId(vehicle.getCustomer().getId());
+        }
+
+        model.addAttribute("customers", customerService.getAllCustomers());
 
         return "admin/vehicle/editVehicle";
     }
