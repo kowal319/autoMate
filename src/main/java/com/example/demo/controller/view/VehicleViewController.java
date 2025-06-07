@@ -90,6 +90,7 @@ public class VehicleViewController {
 
         model.addAttribute("fuelTypes", FuelType.values());
 
+
         List<Integer> years = IntStream.rangeClosed(1990, LocalDate.now().getYear())
                 .boxed()
                 .sorted(Comparator.reverseOrder())
