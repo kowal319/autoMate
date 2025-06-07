@@ -67,7 +67,8 @@ public class VehicleViewController {
     }
 
     @PostMapping("/createVehicle")
-    public String createVehicle(@ModelAttribute VehicleDTO vehicleDTO, RedirectAttributes redirectAttributes){
+    public String createVehicle(@ModelAttribute VehicleDTO vehicleDTO,
+                                RedirectAttributes redirectAttributes){
         vehicleService.createVehicle(vehicleDTO);
         redirectAttributes.addFlashAttribute("successMesage", "Vehicle added");
         return "redirect:/vehicles";

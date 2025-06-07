@@ -4,10 +4,13 @@ import com.example.demo.dto.BrandDTO;
 import com.example.demo.entity.Brand;
 import com.example.demo.repository.BrandRepository;
 import com.example.demo.service.BrandService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;

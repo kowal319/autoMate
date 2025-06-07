@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Panel Administratora</h2>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="/admin/brand/add" class="btn btn-primary w-100">➕ Dodaj markę pojazdu</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/model/add" class="btn btn-secondary w-100">🚗 Dodaj model pojazdu</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/vehicle/vehicles" class="btn btn-success w-100">📋 Lista pojazdów</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/customers" class="btn btn-warning w-100">👤 Klienci</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
