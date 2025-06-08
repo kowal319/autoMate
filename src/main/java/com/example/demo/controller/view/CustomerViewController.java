@@ -34,7 +34,7 @@ public class CustomerViewController {
     public String listAllCustomers(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "admin/customers";
+        return "admin/customer/customers";
     }
 
     @GetMapping("/infoCustomer/{id}")
@@ -44,7 +44,7 @@ public class CustomerViewController {
 
         List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(id);
         model.addAttribute("vehicles", vehicles);
-        return "admin/infoCustomer";
+        return "admin/customer/infoCustomer";
     }
 
     @PostMapping("delete/{id}")
@@ -56,7 +56,7 @@ public class CustomerViewController {
     @GetMapping("/createCustomer")
     public String showCreateForm(Model model) {
         model.addAttribute("customerDTO", new CustomerDTO());
-        return "admin/createCustomer";
+        return "admin/customer/createCustomer";
     }
 
     @PostMapping("/createCustomer")
@@ -74,7 +74,7 @@ public class CustomerViewController {
         dto.setName(customer.getName());
         dto.setEmail(customer.getEmail());
         model.addAttribute("customerDTO", dto);
-        return "admin/editCustomer";
+        return "admin/customer/editCustomer";
     }
 
     @PostMapping("/editCustomer/{id}")

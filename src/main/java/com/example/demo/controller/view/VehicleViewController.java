@@ -3,7 +3,9 @@ package com.example.demo.controller.view;
 import com.example.demo.dto.VehicleDTO;
 import com.example.demo.entity.FuelType;
 import com.example.demo.entity.Vehicle;
+import com.example.demo.service.BrandService;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.ModelService;
 import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,15 @@ public class VehicleViewController {
 
     private final VehicleService vehicleService;
     private final CustomerService customerService;
+    private final BrandService brandService;
+    private final ModelService modelService;
 
     @Autowired
-    public VehicleViewController(VehicleService vehicleService, CustomerService customerService) {
+    public VehicleViewController(VehicleService vehicleService, CustomerService customerService, BrandService brandService, ModelService modelService) {
         this.vehicleService = vehicleService;
         this.customerService = customerService;
+        this.brandService = brandService;
+        this.modelService = modelService;
     }
 
     @GetMapping
@@ -62,6 +68,8 @@ public class VehicleViewController {
                 .collect(Collectors.toList());
         model.addAttribute("years", years);
         model.addAttribute("customers", customerService.getAllCustomers());
+        model.addAttribute("brands", brandService.getAllBrands());
+
 
         return "admin/vehicle/createVehicle";
     }
