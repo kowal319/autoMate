@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Models List</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    .card {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn-group .btn {
+        width: 100px;
+    }
+    .table th, .table td {
+        text-align: center;
+    }
+    .btn-danger, .btn-info, .btn-primary {
+        width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+<br />
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-10 mx-auto">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title">Models</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex justify-content-end mb-3">
+            <a th:href="@{/brands/{brandId}/models/create(brandId=${brand.id})}" class="btn btn-success">
+              <i class="fas fa-plus-circle"></i> Dodaj nowy model
+            </a>
+          </div>
+
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="model : ${models}">
+              <td th:text="${model.id}"></td>
+              <td th:text="${model.name}"></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Operations">
+                  <form th:action="@{/brands/{brandId}/models/delete/{id}(brandId=${brand.id}, id=${model.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Na pewno usunąć ten model?')">
+                      <i class="fas fa-trash"></i> Usuń
+                    </button>
+                  </form>
+
+                  <a th:href="@{/brands/{brandId}/models/info/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-info">
+                    <i class="fas fa-info-circle"></i> Info
+                  </a>
+
+                  <a th:href="@{/brands/{brandId}/models/edit/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edytuj
+                  </a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
