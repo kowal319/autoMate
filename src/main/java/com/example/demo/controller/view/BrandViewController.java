@@ -61,6 +61,7 @@ public class BrandViewController {
     public String showEditBrandForm(@PathVariable Long id, Model model) {
         Brand brand = brandService.getBrandById(id);
         BrandDTO brandDTO = new BrandDTO();
+        brandDTO.setId(brand.getId());
         brandDTO.setName(brand.getName());
         model.addAttribute("brandDTO", brandDTO);
         return "admin/brand/editBrand";
@@ -72,6 +73,6 @@ public class BrandViewController {
                               RedirectAttributes redirectAttributes) {
         brandService.updateBrand(id, brandDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
-        return "redirect:/brands/info/" + id;
+        return "redirect:/brands";
     }
 }
