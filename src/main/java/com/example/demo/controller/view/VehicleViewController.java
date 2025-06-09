@@ -87,8 +87,8 @@ public class VehicleViewController {
         Vehicle vehicle = vehicleService.getVehicleById(id);
         VehicleDTO vehicleDTO = new VehicleDTO();
         vehicleDTO.setId(vehicle.getId());
-        vehicleDTO.setBrand(vehicle.getBrand());
-        vehicleDTO.setModel(vehicle.getModel());
+        vehicleDTO.setBrandId(vehicle.getBrand().getId());
+        vehicleDTO.setModelId(vehicle.getModel().getId());
         vehicleDTO.setRegistrationPlate(vehicle.getRegistrationPlate());
         vehicleDTO.setYear(vehicle.getYear());
         vehicleDTO.setVin(vehicle.getVin());

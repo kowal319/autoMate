@@ -2,9 +2,13 @@ package com.example.demo.service.Implementation;
 
 
 import com.example.demo.dto.VehicleDTO;
+import com.example.demo.entity.Brand;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Model;
 import com.example.demo.entity.Vehicle;
+import com.example.demo.repository.BrandRepository;
 import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.ModelRepository;
 import com.example.demo.repository.VehicleRepository;
 import com.example.demo.service.VehicleService;
 import org.springframework.stereotype.Service;
@@ -17,28 +21,42 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final CustomerRepository customerRepository;
+    private final BrandRepository brandRepository;
+    private final ModelRepository modelRepository;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, CustomerRepository customerRepository, BrandRepository brandRepository, ModelRepository modelRepository) {
         this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
+        this.brandRepository = brandRepository;
+        this.modelRepository = modelRepository;
     }
-
 
     @Override
     public Vehicle createVehicle(VehicleDTO vehicleDTO) {
-       Vehicle vehicle = new Vehicle();
-       vehicle.setBrand(vehicleDTO.getBrand());
-       vehicle.setModel(vehicleDTO.getModel());
-       vehicle.setRegistrationPlate(vehicleDTO.getRegistrationPlate());
-       vehicle.setVin(vehicleDTO.getVin());
-       vehicle.setEngineCapacity(vehicleDTO.getEngineCapacity());
-       vehicle.setFuelType(vehicleDTO.getFuelType());
-       vehicle.setYear(vehicleDTO.getYear());
-       vehicle.setDescription(vehicleDTO.getDescription());
 
-       Customer customer = customerRepository.findById(vehicleDTO.getCustomerId())
+        System.out.println("vehicleDTO.brandId = " + vehicleDTO.getBrandId());
+        System.out.println("vehicleDTO.modelId = " + vehicleDTO.getModelId());
+
+        Brand brand = brandRepository.findById(vehicleDTO.getBrandId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
+
+        Model model = modelRepository.findById(vehicleDTO.getModelId())
+                .orElseThrow(() -> new RuntimeException("Model not found"));
+
+        Customer customer = customerRepository.findById(vehicleDTO.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setBrand(brand);
+        vehicle.setModel(model);
         vehicle.setCustomer(customer);
+
+        vehicle.setRegistrationPlate(vehicleDTO.getRegistrationPlate());
+        vehicle.setVin(vehicleDTO.getVin());
+        vehicle.setEngineCapacity(vehicleDTO.getEngineCapacity());
+        vehicle.setFuelType(vehicleDTO.getFuelType());
+        vehicle.setYear(vehicleDTO.getYear());
+        vehicle.setDescription(vehicleDTO.getDescription());
 
         return vehicleRepository.save(vehicle);
     }
@@ -58,8 +76,15 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle updateVehicle(Long id, VehicleDTO updatedVehicleDTO) {
        Vehicle existing = vehicleRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Not found"));
-        existing.setBrand(updatedVehicleDTO.getBrand());
-        existing.setModel(updatedVehicleDTO.getModel());
+        // Pobieranie brand
+        Brand brand = brandRepository.findById(updatedVehicleDTO.getBrandId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
+        existing.setBrand(brand);
+
+        // Pobieranie model
+        Model model = modelRepository.findById(updatedVehicleDTO.getModelId())
+                .orElseThrow(() -> new RuntimeException("Model not found"));
+        existing.setModel(model);
         existing.setRegistrationPlate(updatedVehicleDTO.getRegistrationPlate());
         existing.setVin(updatedVehicleDTO.getVin());
         existing.setYear(updatedVehicleDTO.getYear());

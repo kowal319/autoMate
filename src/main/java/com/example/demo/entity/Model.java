@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
+    @JsonManagedReference
     private Brand brand;
 }

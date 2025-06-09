@@ -30,7 +30,7 @@
                 <!-- BRAND -->
                 <div class="mb-3">
                     <label for="brandSelect" class="form-label">Brand</label>
-                    <select class="form-select" id="brandSelect" name="brandId" required>
+                    <select class="form-select" id="brandSelect" th:field="*{brandId}" required>
                         <option value="" disabled selected>-- Select brand --</option>
                         <option th:each="brand : ${brands}"
                                 th:value="${brand.id}"
@@ -42,7 +42,7 @@
                 <!-- MODEL (dynamic) -->
                 <div class="mb-3">
                     <label for="modelSelect" class="form-label">Model</label>
-                    <select class="form-select" id="modelSelect" name="modelId" required>
+                    <select class="form-select" id="modelSelect" th:field="*{modelId}" required>
                         <option value="" disabled selected>-- Select model --</option>
                     </select>
                 </div>

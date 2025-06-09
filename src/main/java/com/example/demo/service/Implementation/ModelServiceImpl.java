@@ -10,6 +10,7 @@ import com.example.demo.service.ModelService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -25,6 +26,15 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<Model> getModelsByBrandId(Long brandId){
         return modelRepository.findByBrandId(brandId);
+    }
+
+
+    @Override
+    public List<ModelDTO> getModelsByBrandIdApi(Long brandId) {
+        List<Model> models = modelRepository.findByBrandId(brandId);
+        return models.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -55,6 +65,16 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Model getModelById(Long id) {
         return modelRepository.findById(id).orElse(null);
+    }
+
+    private ModelDTO mapToDTO(Model model) {
+        ModelDTO dto = new ModelDTO();
+        dto.setId(model.getId());
+        dto.setName(model.getName());
+        if (model.getBrand() != null) {
+            dto.setBrandId(model.getBrand().getId());
+        }
+        return dto;
     }
     }
 

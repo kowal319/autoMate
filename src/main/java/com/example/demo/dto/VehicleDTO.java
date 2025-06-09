@@ -11,8 +11,8 @@ import lombok.Setter;
 public class VehicleDTO {
 
     private Long id;
-    private String brand;
-    private String model;
+    private Long brandId;
+    private Long modelId;
     private String registrationPlate;
     private int year;
     private String vin;

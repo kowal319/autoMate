@@ -1,5 +1,6 @@
 package com.example.demo.controller.api;
 
+import com.example.demo.dto.ModelDTO;
 import com.example.demo.entity.Model;
 import com.example.demo.service.ModelService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ModelApiController {
     }
 
     @GetMapping
-    public List<Model> getModelsByBrandId(@PathVariable Long brandId) {
-        return modelService.getModelsByBrandId(brandId);
+    public List<ModelDTO> getModelsByBrandId(@PathVariable Long brandId) {
+        return modelService.getModelsByBrandIdApi(brandId);
     }
 }

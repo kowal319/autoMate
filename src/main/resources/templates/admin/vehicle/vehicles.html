@@ -57,8 +57,8 @@
                         <tbody>
                         <tr th:each="vehicle : ${vehicles}">
                             <td th:text="${vehicle.id}"></td>
-                            <td th:text="${vehicle.brand}"></td>
-                            <td th:text="${vehicle.model}"></td>
+                            <td th:text="${vehicle.brand.name}"></td>
+                            <td th:text="${vehicle.model.name}"></td>
                             <td th:text="${vehicle.vin}"></td>
 
                             <td>
