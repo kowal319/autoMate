@@ -2,7 +2,9 @@ package com.example.demo;
 
 import com.example.demo.controller.api.VehicleApiController;
 import com.example.demo.dto.VehicleDTO;
+import com.example.demo.entity.Brand;
 import com.example.demo.entity.FuelType;
+import com.example.demo.entity.Model;
 import com.example.demo.entity.Vehicle;
 import com.example.demo.service.VehicleService;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,15 +27,26 @@ class VehicleApiControllerTest {
 
     private Vehicle vehicle;
     private VehicleDTO vehicleDTO;
+    private Brand brand;
+    private Model model;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        Brand brand = new Brand();
+        brand.setId(1L);
+        brand.setName("BMW");
+
+        Model model = new Model();
+        model.setId(1L);
+        model.setName("Series 3");
+        model.setBrand(brand);
 
         vehicle = new Vehicle();
         vehicle.setId(1L);
-        vehicle.setBrand("BMW");
-        vehicle.setModel("Series 3");
+        vehicle.setBrand(brand);
+        vehicle.setModel(model);
         vehicle.setYear(2003);
         vehicle.setVin("1HGCM82633A004352");
         vehicle.setFuelType(FuelType.PETROL);
@@ -42,8 +55,8 @@ class VehicleApiControllerTest {
 
         vehicleDTO = new VehicleDTO();
         vehicleDTO.setId(1L);
-        vehicleDTO.setBrand("BMW");
-        vehicleDTO.setModel("Series 3");
+        vehicleDTO.setBrandId(1L);
+        vehicleDTO.setModelId(1L);
         vehicleDTO.setYear(2003);
         vehicleDTO.setVin("1HGCM82633A004352");
         vehicleDTO.setFuelType(FuelType.PETROL);

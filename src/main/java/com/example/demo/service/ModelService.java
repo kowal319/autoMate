@@ -12,6 +12,11 @@ public interface ModelService {
 
     Model createNewModel(Long id, ModelDTO modelDTO);
 
+
+    ModelDTO getModelForBrand(Long brandId, Long modelId);
+
+    Model save(Model model);
+
     Model updateModel(Long id, ModelDTO modelDTO);
 
     void deleteModel(Long id);

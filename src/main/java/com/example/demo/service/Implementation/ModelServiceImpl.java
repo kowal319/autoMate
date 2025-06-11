@@ -6,7 +6,9 @@ import com.example.demo.entity.Brand;
 import com.example.demo.entity.Model;
 import com.example.demo.repository.BrandRepository;
 import com.example.demo.repository.ModelRepository;
+import com.example.demo.repository.VehicleRepository;
 import com.example.demo.service.ModelService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +19,12 @@ public class ModelServiceImpl implements ModelService {
 
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public ModelServiceImpl(ModelRepository modelRepository, BrandRepository brandRepository) {
+    public ModelServiceImpl(ModelRepository modelRepository, BrandRepository brandRepository, VehicleRepository vehicleRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     @Override
@@ -46,6 +50,23 @@ public class ModelServiceImpl implements ModelService {
         model.setName(modelDTO.getName());
         model.setBrand(brand);
 
+        return modelRepository.save(model);
+    }
+
+    @Override
+    public ModelDTO getModelForBrand(Long brandId, Long modelId) {
+        Model model = modelRepository.findById(modelId)
+                .orElseThrow(() -> new EntityNotFoundException("Model not found"));
+
+        if (model.getBrand() == null || !model.getBrand().getId().equals(brandId)) {
+            throw new EntityNotFoundException("Model does not belong to the specified brand");
+        }
+
+        return mapToDTO(model);
+    }
+
+    @Override
+    public Model save(Model model) {
         return modelRepository.save(model);
     }
 
