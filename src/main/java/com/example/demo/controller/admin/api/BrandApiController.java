@@ -1,4 +1,4 @@
-package com.example.demo.controller.api;
+package com.example.demo.controller.admin.api;
 
 
 import com.example.demo.dto.BrandDTO;

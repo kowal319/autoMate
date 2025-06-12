@@ -1,4 +1,4 @@
-package com.example.demo.controller.view;
+package com.example.demo.controller.admin.view;
 
 import com.example.demo.dto.BrandDTO;
 import com.example.demo.entity.Brand;

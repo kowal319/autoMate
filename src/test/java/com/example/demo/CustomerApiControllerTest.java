@@ -1,15 +1,13 @@
 package com.example.demo;
 
-import com.example.demo.controller.api.CustomerApiController;
+import com.example.demo.controller.admin.api.CustomerApiController;
 import com.example.demo.dto.CustomerDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 

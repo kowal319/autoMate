@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.controller.api.BrandApiController;
+import com.example.demo.controller.admin.api.BrandApiController;
 import com.example.demo.dto.BrandDTO;
 import com.example.demo.entity.Brand;
 import com.example.demo.service.BrandService;

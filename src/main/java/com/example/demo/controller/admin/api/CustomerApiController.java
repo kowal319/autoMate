@@ -1,4 +1,4 @@
-package com.example.demo.controller.api;
+package com.example.demo.controller.admin.api;
 
 import com.example.demo.dto.CustomerDTO;
 import com.example.demo.entity.Customer;
@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 

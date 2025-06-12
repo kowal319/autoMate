@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.controller.api.ModelApiController;
+import com.example.demo.controller.admin.api.ModelApiController;
 import com.example.demo.dto.ModelDTO;
 import com.example.demo.entity.Brand;
 import com.example.demo.entity.Model;

@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.controller.api.VehicleApiController;
+import com.example.demo.controller.admin.api.VehicleApiController;
 import com.example.demo.dto.VehicleDTO;
 import com.example.demo.entity.Brand;
 import com.example.demo.entity.FuelType;
