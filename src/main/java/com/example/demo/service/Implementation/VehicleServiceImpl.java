@@ -145,4 +145,9 @@ public class VehicleServiceImpl implements VehicleService {
 
         vehicleRepository.save(vehicle);
     }
+
+    @Override
+    public Optional<Vehicle> findByIdAndCustomer(Long vehicleId, Customer customer) {
+        return vehicleRepository.findByIdAndCustomerId(vehicleId, customer.getId());
+    }
 }

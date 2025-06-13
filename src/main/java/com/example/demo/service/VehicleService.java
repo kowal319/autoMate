@@ -5,6 +5,7 @@ import com.example.demo.entity.Customer;
 import com.example.demo.entity.Vehicle;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VehicleService {
 
@@ -17,4 +18,6 @@ public interface VehicleService {
     List<Vehicle> getVehiclesByCustomerId(Long customerId);
 
     void createVehicleForCustomer(VehicleDTO dto, Customer customer);
+
+    Optional<Vehicle> findByIdAndCustomer(Long vehicleId, Customer customer);
 }

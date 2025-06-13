@@ -3,16 +3,16 @@ package com.example.demo.controller.customer;
 import com.example.demo.dto.VehicleDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.FuelType;
+import com.example.demo.entity.Vehicle;
 import com.example.demo.service.BrandService;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.VehicleService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -69,4 +69,18 @@ public class VehicleViewControllerCustomerSide {
         redirectAttributes.addFlashAttribute("success", "Vehicle added successfully.");
         return "redirect:/profileUser";
     }
+
+    @GetMapping("/infoVehicle/{id}")
+    public String showVehicleDetails(@PathVariable Long id, Model model, Authentication auth) {
+        String email = auth.getName();
+        Customer customer = customerService.findByEmail(email).orElseThrow();
+
+        Vehicle vehicle = vehicleService.findByIdAndCustomer(id, customer)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied"));
+
+        model.addAttribute("vehicle", vehicle);
+        return "customer/vehicle/vehicleInfo";
+    }
+
+
 }
