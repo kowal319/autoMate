@@ -38,9 +38,11 @@ public class CustomerMainController {
         return "customer/home";
     }
 
-    @GetMapping("/edit/{id}")
-    public String myProfileEditForm(@PathVariable Long id, Model model){
-        Customer customer = customerService.getCustomerById(id);
+    @GetMapping("/edit")
+    public String myProfileEditForm(Model model, Authentication authentication) {
+        String email = authentication.getName();
+        Customer customer = customerService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         CustomerDTO dto = new CustomerDTO();
         dto.setId(customer.getId());
@@ -51,29 +53,42 @@ public class CustomerMainController {
         return "customer/myProfileEdit";
     }
 
-    @PostMapping("/edit/{id}")
-    public String myProfileEditSave(@PathVariable Long id, @ModelAttribute CustomerDTO updatedCustomer){
-        customerService.updateCustomer(id, updatedCustomer);
+    @PostMapping("/edit")
+    public String myProfileEditSave(@ModelAttribute CustomerDTO updatedCustomer, Authentication authentication) {
+        String email = authentication.getName();
+        Customer customer = customerService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        customerService.updateCustomer(customer.getId(), updatedCustomer);
         return "redirect:/profileUser";
     }
 
-    @GetMapping("/changePassword/{id}")
-    public String showChangePasswordForm(@PathVariable Long id, Model model){
-        model.addAttribute("customerId", id);
+    @GetMapping("/changePassword")
+    public String showChangePasswordForm(Model model, Authentication authentication) {
+        String email = authentication.getName();
+        Customer customer = customerService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        model.addAttribute("customerId", customer.getId()); // jeśli potrzebujesz ID np. w formularzu
         return "customer/changePassword";
     }
 
-    @PostMapping("/changePassword/{id}")
-    public String changePassword(@PathVariable Long id,
-                                 @RequestParam String password,
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam String password,
                                  @RequestParam String confirmPassword,
-                                 RedirectAttributes redirectAttributes){
-        if (!password.equals(confirmPassword)){
-            redirectAttributes.addFlashAttribute("errorMessage", "Hasla nie sa takie same");
-            return "redirect:/profileUser/changePassword/" + id;
+                                 RedirectAttributes redirectAttributes,
+                                 Authentication authentication) {
+        String email = authentication.getName();
+        Customer customer = customerService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        if (!password.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Hasła nie są takie same");
+            return "redirect:/profileUser/changePassword";
         }
-        customerService.changePassword(id, password);
-        redirectAttributes.addFlashAttribute("successMessage", " Haslo zmienione");
+
+        customerService.changePassword(customer.getId(), password);
+        redirectAttributes.addFlashAttribute("successMessage", "Hasło zmienione");
         return "redirect:/profileUser";
     }
 

@@ -115,4 +115,34 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> getVehiclesByCustomerId(Long customerId) {
         return vehicleRepository.findByCustomerId(customerId);
     }
+
+
+    //Customer side
+
+    @Override
+    public void createVehicleForCustomer(VehicleDTO dto, Customer customer) {
+
+        Brand brand = brandRepository.findById(dto.getBrandId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
+
+        Model model = modelRepository.findById(dto.getModelId())
+                .orElseThrow(() -> new RuntimeException("Model not found"));
+
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setBrand(brand);
+        vehicle.setModel(model);
+        vehicle.setCustomer(customer);
+
+        vehicle.setRegistrationPlate(dto.getRegistrationPlate());
+        vehicle.setVin(dto.getVin());
+        vehicle.setEngineCapacity(dto.getEngineCapacity());
+        vehicle.setFuelType(dto.getFuelType());
+        vehicle.setYear(dto.getYear());
+        vehicle.setDescription(dto.getDescription());
+
+        customer.getVehicles().add(vehicle);
+
+        vehicleRepository.save(vehicle);
+    }
 }

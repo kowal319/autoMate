@@ -13,17 +13,42 @@
 
   <!-- Action buttons -->
   <div class="mb-4 text-center">
-    <a th:href="@{/profileUser/edit/{id}(id=${customer.id})}" class="btn btn-outline-primary mx-2">Edit Profile</a>
-    <a th:href="@{/profileUser/changePassword/{id}(id=${customer.id})}" class="btn btn-outline-warning mx-2">Change Password</a>
-    <a th:href="@{/vehicles/add}" class="btn btn-outline-success mx-2">Add Vehicle</a>
+    <a th:href="@{/profileUser/edit}" class="btn btn-outline-primary mx-2">Edit Profile</a>
+    <a th:href="@{/profileUser/changePassword}" class="btn btn-outline-warning mx-2">Change Password</a>
+    <a th:href="@{/profileUser/createMyVehicle}" class="btn btn-outline-success mx-2">Add Vehicle</a>
   </div>
 
   <!-- Vehicle list -->
   <div th:if="${vehicles != null and !vehicles.isEmpty()}">
-    <h3>Your Vehicles:</h3>
-    <ul>
-      <li th:each="vehicle : ${vehicles}" th:text="${vehicle.name}">Vehicle name</li>
-    </ul>
+    <h3 class="mb-4 text-center">Your Vehicles:</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="col" th:each="vehicle : ${vehicles}">
+        <div class="card h-100 shadow-sm">
+
+          <!-- Placeholder for image -->
+          <img src="https://via.placeholder.com/400x200?text=Vehicle+Image" class="card-img-top" alt="Vehicle Image">
+
+          <!-- Vehicle info -->
+          <div class="card-body">
+            <h5 class="card-title" th:text="${vehicle.brand.name} + ' ' + ${vehicle.model.name}">Brand Model</h5>
+            <p class="card-text">
+              <strong>Plate:</strong> <span th:text="${vehicle.registrationPlate}"></span><br />
+              <strong>Fuel:</strong> <span th:text="${vehicle.fuelType}"></span><br />
+              <strong>Year:</strong> <span th:text="${vehicle.year}"></span>
+            </p>
+          </div>
+
+          <!-- Buttons -->
+          <div class="card-footer text-center">
+            <a th:href="@{/vehicle/details/{id}(id=${vehicle.id})}" class="btn btn-secondary btn-sm mx-1">Go to vehicle</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${vehicles == null or vehicles.isEmpty()}">
+    <p class="text-center">You have no vehicles yet.</p>
   </div>
   <div th:if="${vehicles == null or vehicles.isEmpty()}">
     <p>You have no vehicles yet.</p>
