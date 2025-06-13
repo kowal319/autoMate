@@ -1,12 +1,18 @@
 package com.example.demo.service.Implementation;
 
 import com.example.demo.dto.CustomerDTO;
+import com.example.demo.dto.RegistrationDTO;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Role;
 import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.service.CustomerService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +21,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+
 
     public CustomerServiceImpl(CustomerRepository customerRepository,
-                               PasswordEncoder passwordEncoder) {
+                               PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -35,11 +44,57 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Optional<Customer> findByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+
+    @Override
+    public Optional<Customer> getCurrentUser(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+            return customerRepository.findByEmail(email);
+        }
+        return null;
+    }
+
+    @Override
+    public Customer registerCustomer(RegistrationDTO registrationDto) {
+        Customer customer = new Customer();
+        customer.setEmail(registrationDto.getEmail());
+        customer.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        customer.setName(registrationDto.getName());
+
+//        // Set default role as "CUSTOMER"
+        Role customerRole = roleRepository.findByName("CUSTOMER");
+        customer.setRoles(new HashSet<>(Collections.singletonList(customerRole)));
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer saveUserWithRole(CustomerDTO customer, String roleName) {
+        // Create the user
+        Customer savedCustomer = createCustomer(customer);
+
+        // Find the role by name
+        Role role = roleRepository.findByName(roleName);
+
+        // Add the role to the user
+        if (role != null) {
+            savedCustomer.getRoles().add(role);
+            customerRepository.save(savedCustomer);
+        } else {
+            throw new IllegalArgumentException("Role not found: " + roleName);
+        }
+        return savedCustomer;
+    }
+
+    @Override
     public Customer createCustomer(CustomerDTO dto) {
         Customer customer = new Customer();
         customer.setEmail(dto.getEmail());
         customer.setName(dto.getName());
-        customer.setPassword(passwordEncoder.encode(dto.getPassword())); // hashujemy
+        customer.setPassword(passwordEncoder.encode(dto.getPassword()));
         return customerRepository.save(customer);
     }
     @Override
