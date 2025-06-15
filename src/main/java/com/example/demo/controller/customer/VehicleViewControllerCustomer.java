@@ -83,7 +83,7 @@ public class VehicleViewControllerCustomer{
         return "customer/vehicle/vehicleInfo";
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("deleteVehicle/{id}")
     public String deleteVehicle(@PathVariable Long id){
         vehicleService.deleteVehicle(id);
         return "redirect:/profileUser";
@@ -111,9 +111,6 @@ public class VehicleViewControllerCustomer{
     public String updateVehicle(@PathVariable Long id,
                                 @ModelAttribute("vehicleDTO") @Valid VehicleDTO vehicleDTO,
                                 RedirectAttributes redirectAttributes){
-        System.out.println("PathVariable id: " + id);
-        System.out.println("DTO id: " + vehicleDTO.getId());
-
         vehicleDTO.setId(id);
         vehicleService.updateBasicInfoInCustomerEditVehicle(id, vehicleDTO);
         redirectAttributes.addFlashAttribute("successMessage", "vehicle updated");
