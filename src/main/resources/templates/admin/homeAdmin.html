@@ -25,6 +25,9 @@
     </style>
 </head>
 <body>
+
+<div th:replace="admin/fragments/navbar :: navbar"></div>
+
 <div class="container mt-5">
     <h2 class="mb-4 text-center">🚗 Admin Dashboard</h2>
 
@@ -38,7 +41,7 @@
                     </div>
                     <h5 class="card-title">Brands & Models</h5>
                     <p class="card-text">Manage car brands and their associated models.</p>
-                    <a href="/brands" class="btn btn-primary w-100">Manage Brands</a>
+                    <a href="/admin/brands" class="btn btn-primary w-100">Manage Brands</a>
                 </div>
             </div>
         </div>
@@ -52,7 +55,7 @@
                     </div>
                     <h5 class="card-title">Vehicles</h5>
                     <p class="card-text">View and manage all vehicles in the system.</p>
-                    <a href="/vehicles" class="btn btn-success w-100">View Vehicles</a>
+                    <a href="/admin/vehicles" class="btn btn-success w-100">View Vehicles</a>
                 </div>
             </div>
         </div>
@@ -66,7 +69,7 @@
                     </div>
                     <h5 class="card-title">Customers</h5>
                     <p class="card-text">Manage customer data and information.</p>
-                    <a href="/customers" class="btn btn-warning w-100">Customer List</a>
+                    <a href="/admin/customers" class="btn btn-warning w-100">Customer List</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/customers")
+@RequestMapping("/admin/customers")
 public class CustomerViewController {
 
     private final CustomerService customerService;
@@ -50,7 +50,7 @@ public class CustomerViewController {
     @PostMapping("delete/{id}")
     public String deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
-        return "redirect:/customers";
+        return "redirect:/admin/customers";
     }
 
     @GetMapping("/createCustomer")
@@ -63,7 +63,7 @@ public class CustomerViewController {
     public String createCustomer(@ModelAttribute CustomerDTO customerDTO, RedirectAttributes redirectAttributes){
         customerService.createCustomer(customerDTO);
         redirectAttributes.addFlashAttribute("successMessage", "uzytkownik dodany");
-        return "redirect:/customers";
+        return "redirect:/admin/customers";
     }
 
     @GetMapping("/editCustomer/{id}")
@@ -83,7 +83,7 @@ public class CustomerViewController {
                                  RedirectAttributes redirectAttributes){
         customerService.updateCustomer(id, customerDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Dane zostaly zmienione");
-        return "redirect:/customers";
+        return "redirect:/admin/customers";
     }
 
     @GetMapping("/changePassword/{id}")
@@ -99,11 +99,11 @@ public class CustomerViewController {
                                  RedirectAttributes redirectAttributes){
         if (!password.equals(confirmPassword)){
             redirectAttributes.addFlashAttribute("errorMessage", "Hasla nie sa takie same");
-            return "redirect:/customers/changePassword" + id;
+            return "redirect:/admin/customers/changePassword" + id;
         }
         customerService.changePassword(id, password);
         redirectAttributes.addFlashAttribute("successMessage", " Haslo zmienione");
-        return "redirect:/customers";
+        return "redirect:/admin/customers";
     }
 
 }

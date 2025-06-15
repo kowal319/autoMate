@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/vehicles")
+@RequestMapping("/admin/vehicles")
 public class VehicleViewController {
 
     private final VehicleService vehicleService;
@@ -54,7 +54,7 @@ public class VehicleViewController {
     @PostMapping("delete/{id}")
     public String deleteVehicle(@PathVariable Long id){
         vehicleService.deleteVehicle(id);
-        return "redirect:/vehicles";
+        return "redirect:/admin/vehicles";
     }
 
     @GetMapping("/createVehicle")
@@ -79,7 +79,7 @@ public class VehicleViewController {
                                 RedirectAttributes redirectAttributes){
         vehicleService.createVehicle(vehicleDTO);
         redirectAttributes.addFlashAttribute("successMesage", "Vehicle added");
-        return "redirect:/vehicles";
+        return "redirect:/admin/vehicles";
     }
 
     @GetMapping("/editVehicle/{id}")
@@ -121,7 +121,7 @@ public class VehicleViewController {
                                 RedirectAttributes redirectAttributes){
         vehicleService.updateVehicle(id, vehicleDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Vehicle updated");
-        return "redirect:/vehicles/infoVehicle/" + id;
+        return "redirect:/admin/vehicles/infoVehicle/" + id;
     }
 
 

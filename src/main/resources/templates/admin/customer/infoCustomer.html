@@ -7,6 +7,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <div class="container mt-5">
 
@@ -17,17 +18,17 @@
     <div class="col" th:each="vehicle : ${vehicles}">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
-          <h5 class="card-title" th:text="|${vehicle.brand} ${vehicle.model}|"></h5>
+          <h5 class="card-title" th:text="|${vehicle.brand.name} ${vehicle.model.name}|"></h5>
           <p class="card-text">
             <strong>ID pojazdu:</strong> <span th:text="${vehicle.id}"></span><br/>
             <strong>Rok produkcji:</strong> <span th:text="${vehicle.year}"></span><br/>
           </p>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <a th:href="@{/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-sm btn-primary">
+          <a th:href="@{/admin/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-sm btn-primary">
             <i class="fas fa-edit"></i> Edytuj
           </a>
-          <form th:action="@{/vehicles/delete/{id}(id=${vehicle.id})}" method="post" onsubmit="return confirm('Na pewno usunąć pojazd?');">
+          <form th:action="@{/admin/vehicles/delete/{id}(id=${vehicle.id})}" method="post" onsubmit="return confirm('Na pewno usunąć pojazd?');">
             <button type="submit" class="btn btn-sm btn-danger">
               <i class="fas fa-trash"></i> Usuń
             </button>
@@ -41,10 +42,10 @@
     </div>
   </div>
   <div class="mt-4">
-    <a th:href="@{/vehicles/add/{customerId}(customerId=${customer.id})}" class="btn btn-success">
+    <a th:href="@{/admin/vehicles/add/{customerId}(customerId=${customer.id})}" class="btn btn-success">
       <i class="fas fa-plus"></i> Dodaj nowy pojazd
     </a>
-    <a th:href="@{/customers}" class="btn btn-secondary ms-2">Wróć do listy klientów</a>
+    <a th:href="@{/admin/customers}" class="btn btn-secondary ms-2">Wróć do listy klientów</a>
   </div>
 
 </div>

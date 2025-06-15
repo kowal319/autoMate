@@ -7,6 +7,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <div class="container mt-5">
   <div class="card">
@@ -45,8 +46,8 @@
         <dt class="col-sm-3">Description</dt>
         <dd class="col-sm-9" th:text="${vehicle.description}">Description</dd>
       </dl>
-      <a th:href="@{/vehicles}" class="btn btn-secondary mt-3">Back to list</a>
-      <a th:href="@{/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-primary mt-3 ms-2">Edit</a>
+      <a th:href="@{/admin/vehicles}" class="btn btn-secondary mt-3">Back to list</a>
+      <a th:href="@{/admin/vehicles/editVehicle/{id}(id=${vehicle.id})}" class="btn btn-primary mt-3 ms-2">Edit</a>
     </div>
   </div>
 </div>

@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <br />
 <div class="container mt-5">
@@ -39,7 +40,7 @@
 
         <div class="card-body">
           <div class="d-flex justify-content-end mb-3">
-            <a th:href="@{/brands/{brandId}/models/create(brandId=${brand.id})}" class="btn btn-success">
+            <a th:href="@{/admin/brands/{brandId}/models/create(brandId=${brand.id})}" class="btn btn-success">
               <i class="fas fa-plus-circle"></i> Dodaj nowy model
             </a>
           </div>
@@ -58,17 +59,17 @@
               <td th:text="${model.name}"></td>
               <td>
                 <div class="btn-group" role="group" aria-label="Operations">
-                  <form th:action="@{/brands/{brandId}/models/delete/{id}(brandId=${brand.id}, id=${model.id})}" method="post" style="display:inline;">
+                  <form th:action="@{/admin/brands/{brandId}/models/delete/{id}(brandId=${brand.id}, id=${model.id})}" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Na pewno usunąć ten model?')">
                       <i class="fas fa-trash"></i> Usuń
                     </button>
                   </form>
 
-                  <a th:href="@{/brands/{brandId}/models/info/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-info">
+                  <a th:href="@{/admin/brands/{brandId}/models/info/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-info">
                     <i class="fas fa-info-circle"></i> Info
                   </a>
 
-                  <a th:href="@{/brands/{brandId}/models/edit/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-primary">
+                  <a th:href="@{/admin/brands/{brandId}/models/edit/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Edytuj
                   </a>
                 </div>

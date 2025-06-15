@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("brands/{brandId}/models")
+@RequestMapping("admin/brands/{brandId}/models")
 public class ModelViewController {
 
 
@@ -51,7 +51,7 @@ public class ModelViewController {
                               RedirectAttributes redirectAttributes) {
         modelService.createNewModel(brandId, modelDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Model added successfully!");
-        return "redirect:/brands/" + brandId + "/models";
+        return "redirect:/admin/brands/" + brandId + "/models";
     }
 
     @GetMapping("/edit/{id}")
@@ -75,7 +75,7 @@ public class ModelViewController {
                               RedirectAttributes redirectAttributes) {
         modelService.updateModel(id, modelDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Model updated!");
-        return "redirect:/brands/" + brandId + "/models";
+        return "redirect:/admin/brands/" + brandId + "/models";
     }
 
     @PostMapping("/delete/{id}")
@@ -84,7 +84,7 @@ public class ModelViewController {
                               RedirectAttributes redirectAttributes) {
         modelService.deleteModel(id);
         redirectAttributes.addFlashAttribute("successMessage", "Model deleted!");
-        return "redirect:/brands/" + brandId + "/models";
+        return "redirect:/admin/brands/" + brandId + "/models";
     }
 
     @GetMapping("/info/{id}")

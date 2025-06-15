@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <br />
 <div class="container mt-5">
@@ -39,7 +40,7 @@
 
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="/vehicles/createVehicle" class="btn btn-success">
+                        <a href="/admin/vehicles/createVehicle" class="btn btn-success">
                             <i class="fas fa-user-plus"></i> Create Vehicle
                         </a>
                     </div>
@@ -63,12 +64,12 @@
 
                             <td>
                                 <div class="btn-group" role="group" aria-label="Operations">
-                                    <form th:action="@{/vehicles/delete/{id}(id=${vehicle.id})}" method="post" class="d-inline">
+                                    <form th:action="@{/admin/vehicles/delete/{id}(id=${vehicle.id})}" method="post" class="d-inline">
                                         <button type="submit" class="btn btn-danger">
                                             <i class="fas fa-trash-alt"></i> Delete
                                         </button>
                                     </form>
-                                    <a th:href="@{/vehicles/infoVehicle/{id}(id=${vehicle.id})}" class="btn btn-info">
+                                    <a th:href="@{/admin/vehicles/infoVehicle/{id}(id=${vehicle.id})}" class="btn btn-info">
                                         <i class="fas fa-info-circle"></i> Info
                                     </a>
                                 </div>

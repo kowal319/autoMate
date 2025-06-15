@@ -7,6 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <div class="container mt-5">
     <div class="card">
@@ -14,14 +15,14 @@
             <h3>Edit Brand</h3>
         </div>
         <div class="card-body">
-            <form th:action="@{/brands/editBrand/{id}(id=${brandDTO.id})}" th:object="${brandDTO}" method="post">
+            <form th:action="@{/admin/brands/editBrand/{id}(id=${brandDTO.id})}" th:object="${brandDTO}" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Brand Name</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}" required />
                 </div>
 
                 <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                <a href="/brands" class="btn btn-secondary ms-2">Anuluj</a>
+                <a href="/admin/brands" class="btn btn-secondary ms-2">Anuluj</a>
             </form>
         </div>
     </div>

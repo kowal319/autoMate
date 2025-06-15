@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/brands")
+@RequestMapping("/admin/brands")
 public class BrandViewController {
 
     private final BrandService brandService;
@@ -40,7 +40,7 @@ public class BrandViewController {
     @PostMapping("/delete/{id}")
     public String deleteBrand(@PathVariable Long id) {
         brandService.deleteBrand(id);
-        return "redirect:/brands";
+        return "redirect:/admin/brands";
     }
 
     @GetMapping("/createBrand")
@@ -54,7 +54,7 @@ public class BrandViewController {
                               RedirectAttributes redirectAttributes) {
         brandService.createNewBrand(brandDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
-        return "redirect:/brands";
+        return "redirect:/admin/brands";
     }
 
     @GetMapping("/editBrand/{id}")
@@ -73,6 +73,6 @@ public class BrandViewController {
                               RedirectAttributes redirectAttributes) {
         brandService.updateBrand(id, brandDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
-        return "redirect:/brands";
+        return "redirect:/admin/brands";
     }
 }
