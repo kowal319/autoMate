@@ -121,7 +121,8 @@ public class VehicleViewController {
                                 RedirectAttributes redirectAttributes){
         vehicleService.updateVehicle(id, vehicleDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Vehicle updated");
-        return "redirect:/vehicles/infoVehicle/" + id;    }
+        return "redirect:/vehicles/infoVehicle/" + id;
+    }
 
 
 }

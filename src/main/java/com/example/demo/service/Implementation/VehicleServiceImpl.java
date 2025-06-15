@@ -100,6 +100,15 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public Vehicle updateBasicInfoInCustomerEditVehicle(Long id, VehicleDTO updatedVehicleDTO){
+        Vehicle existing = vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        existing.setRegistrationPlate(updatedVehicleDTO.getRegistrationPlate());
+        existing.setDescription(updatedVehicleDTO.getDescription());
+        return vehicleRepository.save(existing);
+    }
+
+    @Override
     public String deleteVehicle(Long id) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
         if(optionalVehicle.isPresent()){

@@ -13,6 +13,9 @@ public interface VehicleService {
     Vehicle getVehicleById(Long id);
     List<Vehicle> getAllVehicles();
     Vehicle updateVehicle(Long id, VehicleDTO updatedVehicleDTO);
+
+    Vehicle updateBasicInfoInCustomerEditVehicle(Long id, VehicleDTO updatedVehicleDTO);
+
     String deleteVehicle(Long id);
 
     List<Vehicle> getVehiclesByCustomerId(Long customerId);

@@ -11,7 +11,7 @@
 <div class="container mt-5">
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h3>Edot Vehicle</h3>
+            <h3>Edit Vehicle</h3>
         </div>
         <div class="card-body">
             <form th:action="@{/vehicles/editVehicle/{id}(id=${vehicleDTO.id})}" th:object="${vehicleDTO}" method="post">
