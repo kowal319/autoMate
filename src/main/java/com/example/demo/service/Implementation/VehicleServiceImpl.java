@@ -92,9 +92,9 @@ public class VehicleServiceImpl implements VehicleService {
         existing.setEngineCapacity(updatedVehicleDTO.getEngineCapacity());
         existing.setDescription(updatedVehicleDTO.getDescription());
 
-        Customer customer = customerRepository.findById(updatedVehicleDTO.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-        existing.setCustomer(customer);
+//        Customer customer = customerRepository.findById(updatedVehicleDTO.getCustomerId())
+//                .orElseThrow(() -> new RuntimeException("Customer not found"));
+//        existing.setCustomer(customer);
 
         return vehicleRepository.save(existing);
     }

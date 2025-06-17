@@ -1,6 +1,8 @@
 package com.example.demo.controller.admin.view;
 
+import com.example.demo.dto.CustomerDTO;
 import com.example.demo.dto.VehicleDTO;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.FuelType;
 import com.example.demo.entity.Vehicle;
 import com.example.demo.service.BrandService;
@@ -82,6 +84,36 @@ public class VehicleViewController {
         return "redirect:/admin/vehicles";
     }
 
+    @GetMapping("/add/{customerId}")
+    public String showCreateVehicleForCustomerByAdmin(@PathVariable Long customerId, Model model){
+        Customer customer = customerService.getCustomerById(customerId);
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setCustomerId(customerId);
+
+        List<Integer> years = IntStream.rangeClosed(1990, LocalDate.now().getYear())
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        model.addAttribute("years", years);
+        model.addAttribute("vehicleDTO", vehicleDTO);
+        model.addAttribute("fuelTypes", FuelType.values());
+        model.addAttribute("brands", brandService.getAllBrands());
+
+        return "admin/vehicle/createVehicleForCustomer";
+    }
+    @PostMapping("/add/{customerId}")
+    public String createVehicleForCustomer(@PathVariable Long customerId,
+                                           @ModelAttribute VehicleDTO vehicleDTO,
+                                           RedirectAttributes redirectAttributes) {
+        Customer customer = customerService.getCustomerById(customerId);
+        vehicleDTO.setCustomerId(customerId);
+        vehicleService.createVehicle(vehicleDTO);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Vehicle added successfully");
+        return "redirect:/admin/customers/infoCustomer/" + customerId;
+    }
+
+
     @GetMapping("/editVehicle/{id}")
     public String showEditVehicleForm(@PathVariable Long id, Model model){
         Vehicle vehicle = vehicleService.getVehicleById(id);
@@ -122,6 +154,53 @@ public class VehicleViewController {
         vehicleService.updateVehicle(id, vehicleDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Vehicle updated");
         return "redirect:/admin/vehicles/infoVehicle/" + id;
+    }
+
+    @GetMapping("/editVehicleForCustomer/{id}")
+    public String showEditVehicleFormForCustomer(@PathVariable Long id, Model model){
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setId(vehicle.getId());
+        vehicleDTO.setBrandId(vehicle.getBrand().getId());
+        vehicleDTO.setModelId(vehicle.getModel().getId());
+        vehicleDTO.setRegistrationPlate(vehicle.getRegistrationPlate());
+        vehicleDTO.setYear(vehicle.getYear());
+        vehicleDTO.setVin(vehicle.getVin());
+        vehicleDTO.setEngineCapacity(vehicle.getEngineCapacity());
+        vehicleDTO.setFuelType(vehicle.getFuelType());
+        vehicleDTO.setDescription(vehicle.getDescription());
+        model.addAttribute("vehicleDTO", vehicleDTO);
+        model.addAttribute("brands", brandService.getAllBrands());
+        model.addAttribute("models", modelService.getModelsByBrandIdApi(vehicle.getBrand().getId()));
+
+        model.addAttribute("fuelTypes", FuelType.values());
+
+
+        List<Integer> years = IntStream.rangeClosed(1990, LocalDate.now().getYear())
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        model.addAttribute("years", years);
+
+        if (vehicle.getCustomer() != null) {
+            vehicleDTO.setCustomerId(vehicle.getCustomer().getId());
+        }
+
+        model.addAttribute("customers", customerService.getAllCustomers());
+
+        return "admin/vehicle/editVehicleForCustomer";
+    }
+
+    @PostMapping("/editVehicleForCustomer/{id}")
+    public String updateVehicleForCustomer(@PathVariable Long id,
+                                           @ModelAttribute("vehicleDTO") @Valid VehicleDTO vehicleDTO,
+                                           RedirectAttributes redirectAttributes){
+        vehicleService.updateVehicle(vehicleDTO.getId(), vehicleDTO);
+        Vehicle updatedVehicle = vehicleService.getVehicleById(id);
+        Long customerId = updatedVehicle.getCustomer().getId();
+        redirectAttributes.addFlashAttribute("successMessage", "Vehicle updated");
+        return "redirect:/admin/customers/infoCustomer/" + customerId;
     }
 
 

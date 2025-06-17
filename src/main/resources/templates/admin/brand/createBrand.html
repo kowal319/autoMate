@@ -4,28 +4,48 @@
   <meta charset="UTF-8" />
   <title>Create New Brand</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .card {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
+
 <div th:replace="admin/fragments/navbar :: navbar"></div>
 
 <div class="container mt-5">
-  <div class="card">
-    <div class="card-header bg-success text-white">
-      <h3>Create New Brand</h3>
-    </div>
-    <div class="card-body">
-      <form th:action="@{/admin/brands/createBrand}" th:object="${brandDTO}" method="post">
-        <div class="mb-3">
-          <label for="name" class="form-label">Brand Name</label>
-          <input type="text" class="form-control" id="name" th:field="*{name}" required />
-        </div>
-        <button type="submit" class="btn btn-success">Zapisz</button>
-        <a href="/admin/brands" class="btn btn-secondary">Anuluj</a>
-      </form>
+  <div class="form-container">
+    <div class="card">
+      <div class="card-header bg-success text-white text-center">
+        <h4 class="mb-0">Create New Brand</h4>
+      </div>
+      <div class="card-body">
+        <form th:action="@{/admin/brands/createBrand}" th:object="${brandDTO}" method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter brand name" required />
+          </div>
+          <div class="d-flex justify-content-between">
+            <a href="/admin/brands" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </body>
 </html>

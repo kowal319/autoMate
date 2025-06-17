@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Vehicle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="admin/fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0">Create new vehicle</h4>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/admin/vehicles/add/{customerId}(customerId=${customerId})}" th:object="${vehicleDTO}" method="post">
+
+            <!-- BRAND -->
+            <div class="mb-3">
+              <label for="brandSelect" class="form-label">Brand</label>
+              <select class="form-select" id="brandSelect" th:field="*{brandId}" required>
+                <option value="" disabled selected>-- Select brand --</option>
+                <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+              </select>
+            </div>
+
+            <!-- MODEL -->
+            <div class="mb-3">
+              <label for="modelSelect" class="form-label">Model</label>
+              <select class="form-select" id="modelSelect" th:field="*{modelId}" required>
+                <option value="" disabled selected>-- Select model --</option>
+              </select>
+            </div>
+
+            <!-- REGISTRATION -->
+            <div class="mb-3">
+              <label for="registrationPlate" class="form-label">Registration Plate</label>
+              <input type="text" maxlength="10" pattern="[A-Z0-9]{1,10}" placeholder="ABC1234" class="form-control"
+                     id="registrationPlate" th:field="*{registrationPlate}" required />
+              <div class="form-text">Max 10 characters: uppercase letters and numbers only</div>
+            </div>
+
+            <!-- VIN -->
+            <div class="mb-3">
+              <label for="vin" class="form-label">VIN</label>
+              <input type="text" maxlength="17" pattern="[A-Z0-9]{17}" placeholder="1HGCM82633A123456"
+                     class="form-control" id="vin" th:field="*{vin}" required />
+              <div class="form-text">Exactly 17 characters: uppercase letters and numbers</div>
+            </div>
+
+            <!-- ENGINE CAPACITY -->
+            <div class="mb-3">
+              <label for="engineCapacity" class="form-label">Engine capacity (L)</label>
+              <input type="number" step="0.1" min="0.6" max="8.0" class="form-control"
+                     id="engineCapacity" th:field="*{engineCapacity}" required />
+              <div class="form-text">From 0.6 to 8.0 liters</div>
+            </div>
+
+            <!-- YEAR -->
+            <div class="mb-3">
+              <label for="year" class="form-label">Year</label>
+              <select class="form-control" id="year" th:field="*{year}">
+                <option th:each="year : ${years}" th:value="${year}" th:text="${year}">Year</option>
+              </select>
+            </div>
+
+            <!-- FUEL TYPE -->
+            <div class="mb-3">
+              <label for="fuelType" class="form-label">Fuel type</label>
+              <select class="form-select" id="fuelType" th:field="*{fuelType}" required>
+                <option value="" disabled selected>-- Select fuel --</option>
+                <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
+              </select>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" th:field="*{description}" rows="3"
+                        placeholder="Additional notes or remarks..."></textarea>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-success">Create</button>
+              <a href="/admin/vehicle/vehicles" class="btn btn-secondary">Cancel</a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('brandSelect').addEventListener('change', function () {
+    const brandId = this.value;
+    const modelSelect = document.getElementById('modelSelect');
+
+    fetch(`/api/brands/${brandId}/models`)
+      .then(response => response.json())
+      .then(data => {
+        modelSelect.innerHTML = '<option value="" disabled selected>-- Select model --</option>';
+        data.forEach(model => {
+          const option = document.createElement('option');
+          option.value = model.id;
+          option.textContent = model.name;
+          modelSelect.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching models:', error);
+        modelSelect.innerHTML = '<option value="" disabled selected>-- Error loading models --</option>';
+      });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

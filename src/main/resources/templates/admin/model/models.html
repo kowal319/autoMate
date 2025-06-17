@@ -7,21 +7,46 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
     .card {
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
     }
+
     .table-hover tbody tr:hover {
-        background-color: #f1f1f1;
+      background-color: #eef3ff;
     }
+
     .btn-group .btn {
-        width: 100px;
+      margin: 0 4px;
     }
-    .table th, .table td {
-        text-align: center;
+
+    .btn {
+      border-radius: 8px;
+      transition: all 0.2s ease-in-out;
     }
-    .btn-danger, .btn-info, .btn-primary {
-        width: 100px;
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .table th,
+    .table td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .card-info {
+      background-color: #ffffff;
+      border-left: 5px solid #0d6efd;
+    }
+
+    .info-title {
+      font-weight: 600;
+      color: #0d6efd;
     }
   </style>
 </head>
@@ -29,54 +54,66 @@
 <body>
 <div th:replace="admin/fragments/navbar :: navbar"></div>
 
-<br />
 <div class="container mt-5">
   <div class="row">
     <div class="col-10 mx-auto">
+
+      <!-- Brand Info Card -->
+      <div class="card mb-4 card-info p-3">
+        <div class="row">
+          <div class="col-md-4">
+            <p class="mb-1 info-title">Brand ID:</p>
+            <p th:text="${brand.id}"></p>
+          </div>
+          <div class="col-md-4">
+            <p class="mb-1 info-title">Brand Name:</p>
+            <p th:text="${brand.name}"></p>
+          </div>
+          <div class="col-md-4">
+            <p class="mb-1 info-title">Total Models:</p>
+            <p th:text="${models.size()}"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Models Table Card -->
       <div class="card">
-        <div class="card-header bg-primary text-white">
-          <h3 class="card-title">Models</h3>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0"><i class="fas fa-car me-2"></i>Car Models</h4>
+          <a th:href="@{/admin/brands/{brandId}/models/create(brandId=${brand.id})}" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Add Model
+          </a>
         </div>
 
         <div class="card-body">
-          <div class="d-flex justify-content-end mb-3">
-            <a th:href="@{/admin/brands/{brandId}/models/create(brandId=${brand.id})}" class="btn btn-success">
-              <i class="fas fa-plus-circle"></i> Dodaj nowy model
-            </a>
-          </div>
-
           <table class="table table-bordered table-hover">
-            <thead>
+            <thead class="table-light">
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Operacje</th>
+              <th>Model Name</th>
+              <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="model : ${models}">
-              <td th:text="${model.id}"></td>
               <td th:text="${model.name}"></td>
               <td>
                 <div class="btn-group" role="group" aria-label="Operations">
-                  <form th:action="@{/admin/brands/{brandId}/models/delete/{id}(brandId=${brand.id}, id=${model.id})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Na pewno usunąć ten model?')">
-                      <i class="fas fa-trash"></i> Usuń
+                  <form th:action="@{/admin/brands/{brandId}/models/delete/{id}(brandId=${brand.id}, id=${model.id})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this model?')">
+                      <i class="fas fa-trash"></i> Delete
                     </button>
                   </form>
 
-                  <a th:href="@{/admin/brands/{brandId}/models/info/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-info">
-                    <i class="fas fa-info-circle"></i> Info
-                  </a>
-
                   <a th:href="@{/admin/brands/{brandId}/models/edit/{id}(brandId=${brand.id}, id=${model.id})}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Edytuj
+                    <i class="fas fa-pen"></i> Rename
                   </a>
                 </div>
               </td>
             </tr>
             </tbody>
           </table>
+
+          <p class="text-muted text-end mt-3">Total: <strong th:text="${models.size()}"></strong> models</p>
         </div>
       </div>
     </div>
