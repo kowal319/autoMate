@@ -72,6 +72,9 @@
                                     <a th:href="@{/admin/vehicles/infoVehicle/{id}(id=${vehicle.id})}" class="btn btn-info">
                                         <i class="fas fa-info-circle"></i> Info
                                     </a>
+                                    <a th:href="@{/admin/vehicles/changeOwner/{id}(id=${vehicle.id})}" class="btn btn-warning">
+                                        <i class="fas fa-user-edit"></i> Change Owner
+                                    </a>
                                 </div>
                             </td>
                         </tr>

@@ -159,4 +159,17 @@ public class VehicleServiceImpl implements VehicleService {
     public Optional<Vehicle> findByIdAndCustomer(Long vehicleId, Customer customer) {
         return vehicleRepository.findByIdAndCustomerId(vehicleId, customer.getId());
     }
-}
+
+    @Override
+    public void changeVehicleOwner(Long vehicleId, Long newCustomerId){
+            Vehicle vehicle = vehicleRepository.findById(vehicleId)
+                    .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+            Customer customer = customerRepository.findById(newCustomerId)
+                    .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+            vehicle.setCustomer(customer);
+            vehicleRepository.save(vehicle);
+        }
+    }
+

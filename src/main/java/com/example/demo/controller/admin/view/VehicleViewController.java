@@ -203,5 +203,33 @@ public class VehicleViewController {
         return "redirect:/admin/customers/infoCustomer/" + customerId;
     }
 
+    @GetMapping("/changeOwner/{id}")
+    public String changeOwnerForm(@PathVariable Long id, Model model){
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setId(vehicle.getId());
+
+        model.addAttribute("vehicleDTO", vehicleDTO);
+
+        if (vehicle.getCustomer() != null) {
+            vehicleDTO.setCustomerId(vehicle.getCustomer().getId());
+        }
+
+        model.addAttribute("customers", customerService.getAllCustomers());
+        return "admin/vehicle/changeOwner";
+    }
+
+    @PostMapping("/changeOwner/{id}")
+    public String changeOwnerSubmit(@PathVariable Long id,
+                                    @ModelAttribute("vehicleDTO") @Valid VehicleDTO vehicleDTO,
+                                    RedirectAttributes redirectAttributes){
+        vehicleService.changeVehicleOwner(vehicleDTO.getId(),
+                vehicleDTO.getCustomerId());
+
+        redirectAttributes.addFlashAttribute("successMessage", "Owner successfully changed.");
+        return "redirect:/admin/vehicles";
+    }
+
 
 }

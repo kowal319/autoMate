@@ -23,4 +23,6 @@ public interface VehicleService {
     void createVehicleForCustomer(VehicleDTO dto, Customer customer);
 
     Optional<Vehicle> findByIdAndCustomer(Long vehicleId, Customer customer);
+
+    void changeVehicleOwner(Long vehicleId, Long newCustomerId);
 }
