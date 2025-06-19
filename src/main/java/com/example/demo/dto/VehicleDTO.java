@@ -20,5 +20,7 @@ public class VehicleDTO {
     private FuelType fuelType;
     private String description;
     private Long customerId;
+    private String brandName;
+    private String modelName;
 
 }

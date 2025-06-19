@@ -93,6 +93,24 @@ public class VehicleApiControllerCustomer {
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         List<Vehicle> vehicles = vehicleService.getVehiclesByCustomerId(customer.getId());
-        return ResponseEntity.ok(vehicles);
+
+        List<VehicleDTO> dtos = vehicles.stream().map(vehicle -> {
+            VehicleDTO dto = new VehicleDTO();
+            dto.setId(vehicle.getId());
+            dto.setRegistrationPlate(vehicle.getRegistrationPlate());
+            dto.setFuelType(vehicle.getFuelType());
+            dto.setYear(vehicle.getYear());
+            dto.setVin(vehicle.getVin());
+            dto.setDescription(vehicle.getDescription());
+            dto.setBrandId(vehicle.getBrand().getId());
+            dto.setBrandName(vehicle.getBrand().getName());
+            dto.setModelId(vehicle.getModel().getId());
+            dto.setModelName(vehicle.getModel().getName());
+            dto.setEngineCapacity(vehicle.getEngineCapacity());
+            dto.setCustomerId(vehicle.getCustomer().getId());
+            return dto;
+        }).toList();
+
+        return ResponseEntity.ok(dtos);
     }
 }
