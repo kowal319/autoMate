@@ -137,7 +137,6 @@ public class VehicleServiceImpl implements VehicleService {
         Model model = modelRepository.findById(dto.getModelId())
                 .orElseThrow(() -> new RuntimeException("Model not found"));
 
-
         Vehicle vehicle = new Vehicle();
         vehicle.setBrand(brand);
         vehicle.setModel(model);

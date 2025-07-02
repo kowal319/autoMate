@@ -29,7 +29,7 @@ private final VehicleInsuranceRepository vehicleInsuranceRepository;
 
     @Override
     public List<VehicleInsurance> getInsurancesByVehicleId(Long vehicleId) {
-        return vehicleInsuranceRepository.findByVehicleId(vehicleId);
+        return vehicleInsuranceRepository.findByVehicleId(vehicleId).reversed();
     }
 
     @Override

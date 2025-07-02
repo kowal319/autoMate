@@ -17,6 +17,5 @@ public class VehicleInsuranceDTO {
     private LocalDate endDate;
     private String insuranceCompany;
     private String additionalInfo;
-    private Vehicle vehicle;
 
 }
