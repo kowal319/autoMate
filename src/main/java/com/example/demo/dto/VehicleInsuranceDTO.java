@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 
+import com.example.demo.entity.Vehicle;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,6 @@ public class VehicleInsuranceDTO {
     private LocalDate endDate;
     private String insuranceCompany;
     private String additionalInfo;
-    private Long VehicleId;
+    private Vehicle vehicle;
 
 }

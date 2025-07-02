@@ -35,6 +35,5 @@ public class VehicleInsurance {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicleId;
-
+    private Vehicle vehicle;
 }
