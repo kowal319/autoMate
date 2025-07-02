@@ -4,8 +4,10 @@ import com.example.demo.dto.VehicleDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.FuelType;
 import com.example.demo.entity.Vehicle;
+import com.example.demo.entity.VehicleInsurance;
 import com.example.demo.service.BrandService;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.VehicleInsuranceService;
 import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,11 +32,13 @@ public class VehicleViewControllerCustomer{
     private final CustomerService customerService;
     private final VehicleService vehicleService;
     private final BrandService brandService;
+    private final VehicleInsuranceService vehicleInsuranceService;
 
-    public VehicleViewControllerCustomer(CustomerService customerService, VehicleService vehicleService, BrandService brandService) {
+    public VehicleViewControllerCustomer(CustomerService customerService, VehicleService vehicleService, BrandService brandService, VehicleInsuranceService vehicleInsuranceService) {
         this.customerService = customerService;
         this.vehicleService = vehicleService;
         this.brandService = brandService;
+        this.vehicleInsuranceService = vehicleInsuranceService;
     }
 
     @GetMapping("/createMyVehicle")
@@ -80,6 +84,10 @@ public class VehicleViewControllerCustomer{
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied"));
 
         model.addAttribute("vehicle", vehicle);
+
+        List<VehicleInsurance> insurances = vehicleInsuranceService.getInsurancesByVehicleId(id);
+        model.addAttribute("insurances", insurances);
+
         return "customer/vehicle/vehicleInfo";
     }
 
