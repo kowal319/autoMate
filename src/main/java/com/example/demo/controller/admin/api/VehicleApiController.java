@@ -2,6 +2,7 @@ package com.example.demo.controller.admin.api;
 
 
 import com.example.demo.dto.VehicleDTO;
+import com.example.demo.entity.FuelType;
 import com.example.demo.entity.Vehicle;
 import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -57,4 +59,12 @@ public class VehicleApiController {
     }
 
 
+
+    @GetMapping("/fuel-types")
+    public ResponseEntity<List<String>> getFuelTypes() {
+        List<String> fuelTypes = Arrays.stream(FuelType.values())
+                .map(Enum::name)
+                .toList();
+        return ResponseEntity.ok(fuelTypes);
+    }
 }

@@ -68,6 +68,7 @@ public class VehicleApiControllerCustomer {
                                            Authentication authentication) {
         vehicleDTO.setId(id);
         vehicleService.updateBasicInfoInCustomerEditVehicle(id, vehicleDTO);
+        System.out.println(vehicleDTO.getEngineCapacity());
         return ResponseEntity.ok("Vehicle updated.");
     }
 
@@ -113,4 +114,6 @@ public class VehicleApiControllerCustomer {
 
         return ResponseEntity.ok(dtos);
     }
+
+
 }

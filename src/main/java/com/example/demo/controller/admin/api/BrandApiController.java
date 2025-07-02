@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/brand")
+@RequestMapping("/api/brands")
 public class BrandApiController {
 
 
@@ -25,7 +25,10 @@ public class BrandApiController {
 
     @GetMapping
     public ResponseEntity<List<Brand>> getAllBrands(){
+        System.out.println("🔥 [API] Przed Wywołaniem getAllBrands()");
         List<Brand> brands = brandService.getAllBrands();
+        System.out.println("🔥 [API] Wywołano getAllBrands()");
+
         return ResponseEntity.ok(brands);
     }
 

@@ -25,7 +25,10 @@ public class ModelApiController {
 
     @GetMapping
     public List<ModelDTO> getModelsByBrandId(@PathVariable Long brandId) {
+        System.out.println("🔥 [API] Przed Wywołaniem Models()");
+
         return modelService.getModelsByBrandIdApi(brandId);
+
     }
 
     @GetMapping("/{modelId}")
