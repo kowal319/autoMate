@@ -3,9 +3,9 @@ package com.example.demo.controller.customer;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Vehicle;
-import com.example.demo.entity.VehicleInsurance;
+import com.example.demo.entity.VehicleInspection;
 import com.example.demo.service.CustomerService;
-import com.example.demo.service.VehicleInsuranceService;
+import com.example.demo.service.VehicleInspectionService;
 import com.example.demo.service.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -19,33 +19,33 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/vehicles/{vehicleId}/insurance")
-public class VehicleInsuranceViewController {
+@RequestMapping("/vehicles/{vehicleId}/inspection")
+public class VehicleInspectionViewController {
 
-    private final VehicleInsuranceService vehicleInsuranceService;
+    private final VehicleInspectionService vehicleInspectionService;
     private final CustomerService customerService;
     private final VehicleService vehicleService;
 
-    public VehicleInsuranceViewController(VehicleInsuranceService vehicleInsuranceService, CustomerService customerService, VehicleService vehicleService) {
-        this.vehicleInsuranceService = vehicleInsuranceService;
+
+    public VehicleInspectionViewController(VehicleInspectionService vehicleInspectionService, CustomerService customerService, VehicleService vehicleService) {
+        this.vehicleInspectionService = vehicleInspectionService;
         this.customerService = customerService;
         this.vehicleService = vehicleService;
     }
 
     @GetMapping("/history")
-    public String showInsuranceHistory(@PathVariable("vehicleId") Long vehicleId, Model model, Authentication authentication) {
+    public String showInspectionHistory(@PathVariable("vehicleId") Long vehicleId, Model model, Authentication authentication){
         String email = authentication.getName();
         Customer customer = customerService.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User Not found"));
 
         Vehicle vehicle = vehicleService.findByIdAndCustomer(vehicleId, customer)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied"));
 
-        List<VehicleInsurance> insurances = vehicleInsuranceService.getInsurancesByVehicleId(vehicleId);
-        model.addAttribute("insurances", insurances);
+        List<VehicleInspection> inspections = vehicleInspectionService.getInspectionByVehicleId(vehicleId);
+        model.addAttribute("inspections", inspections);
         model.addAttribute("vehicle", vehicle);
 
-        return "customer/vehicle/insurance/insurancesList";
+        return "customer/vehicle/inspection/inspectionList";
     }
-
 }

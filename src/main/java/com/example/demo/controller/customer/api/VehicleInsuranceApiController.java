@@ -59,7 +59,7 @@ public class VehicleInsuranceApiController {
     }
 
     @DeleteMapping("/{vehicleId}/insurance/{id}")
-    public ResponseEntity<?> deleteVehicle(@PathVariable Long id,
+    public ResponseEntity<?> deleteInsurance(@PathVariable Long id,
                                            Authentication authentication) {
         vehicleInsuranceService.deleteInsurance(id);
         return ResponseEntity.ok("Insurance Deleted.");
