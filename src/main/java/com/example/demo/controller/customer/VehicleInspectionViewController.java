@@ -58,7 +58,9 @@ public class VehicleInspectionViewController {
     }
 
         @GetMapping("/createInspection")
-        public String showCreateVehicleForm(@PathVariable Long vehicleId, Model model, Authentication authentication) {
+        public String showCreateInspectionForm(@PathVariable Long vehicleId,
+                                               Model model,
+                                               Authentication authentication) {
             String email = authentication.getName();
             Customer customer = customerService.findByEmail(email)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
@@ -67,13 +69,13 @@ public class VehicleInspectionViewController {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied"));
 
             model.addAttribute("vehicleInspectionDTO", new VehicleInspectionDTO());
-            model.addAttribute("vehicle", vehicle); // <--- DODAJ TO
+            model.addAttribute("vehicle", vehicle);
 
             return "customer/vehicle/inspection/createInspection";
         }
 
     @PostMapping("/createInspection")
-    public String createMyVehicle(@PathVariable Long vehicleId,
+    public String createInspection(@PathVariable Long vehicleId,
                                   @ModelAttribute @Valid VehicleInspectionDTO inspectionDTO,
                                   Authentication authentication,
                                   RedirectAttributes redirectAttributes) {
