@@ -1,14 +1,8 @@
 package com.example.demo.controller.customer;
 
 import com.example.demo.dto.VehicleDTO;
-import com.example.demo.entity.Customer;
-import com.example.demo.entity.FuelType;
-import com.example.demo.entity.Vehicle;
-import com.example.demo.entity.VehicleInsurance;
-import com.example.demo.service.BrandService;
-import com.example.demo.service.CustomerService;
-import com.example.demo.service.VehicleInsuranceService;
-import com.example.demo.service.VehicleService;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -33,12 +27,14 @@ public class VehicleViewControllerCustomer{
     private final VehicleService vehicleService;
     private final BrandService brandService;
     private final VehicleInsuranceService vehicleInsuranceService;
+    private final VehicleInspectionService vehicleInspectionService;
 
-    public VehicleViewControllerCustomer(CustomerService customerService, VehicleService vehicleService, BrandService brandService, VehicleInsuranceService vehicleInsuranceService) {
+    public VehicleViewControllerCustomer(CustomerService customerService, VehicleService vehicleService, BrandService brandService, VehicleInsuranceService vehicleInsuranceService, VehicleInspectionService vehicleInspectionService) {
         this.customerService = customerService;
         this.vehicleService = vehicleService;
         this.brandService = brandService;
         this.vehicleInsuranceService = vehicleInsuranceService;
+        this.vehicleInspectionService = vehicleInspectionService;
     }
 
     @GetMapping("/createMyVehicle")
@@ -87,6 +83,9 @@ public class VehicleViewControllerCustomer{
 
         List<VehicleInsurance> insurances = vehicleInsuranceService.getInsurancesByVehicleId(id);
         model.addAttribute("insurances", insurances);
+
+        List<VehicleInspection> inspections = vehicleInspectionService.getInspectionByVehicleId(id);
+        model.addAttribute("inspections", inspections);
 
         return "customer/vehicle/vehicleInfo";
     }

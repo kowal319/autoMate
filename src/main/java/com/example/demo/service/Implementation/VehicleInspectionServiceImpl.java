@@ -30,7 +30,7 @@ public class VehicleInspectionServiceImpl implements VehicleInspectionService {
 
     @Override
     public List<VehicleInspection> getInspectionByVehicleId(Long vehicleId) {
-        return vehicleInspectionRepository.findByVehicleId(vehicleId);
+        return vehicleInspectionRepository.findByVehicleId(vehicleId).reversed();
     }
 
     @Override
