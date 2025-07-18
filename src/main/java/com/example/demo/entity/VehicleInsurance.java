@@ -38,4 +38,8 @@ public class VehicleInsurance {
     @JoinColumn(name = "vehicle_id")
     @JsonIgnore
     private Vehicle vehicle;
+
+    public boolean isExpiringSoon() {
+        return endDate != null && endDate.isBefore(LocalDate.now().plusDays(30));
+    }
 }

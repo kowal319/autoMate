@@ -11,10 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -64,11 +61,16 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmail(registrationDto.getEmail());
         customer.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         customer.setName(registrationDto.getName());
+        customer.setEnabled(false);
+
 
 //        // Set default role as "CUSTOMER"
         Role customerRole = roleRepository.findByName("CUSTOMER");
         customer.setRoles(new HashSet<>(Collections.singletonList(customerRole)));
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+
+
+        return customer;
     }
 
     @Override

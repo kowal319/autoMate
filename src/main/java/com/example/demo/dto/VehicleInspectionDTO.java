@@ -15,4 +15,6 @@ public class VehicleInspectionDTO {
     private LocalDate endDate;
     private String inspectionCompany;
     private String additionalInfo;
+
+
 }

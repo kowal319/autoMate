@@ -55,5 +55,7 @@ public class Customer {
     )
     private Set<Role> roles = new HashSet<>();
 
+    private boolean enabled = false;
+
 
 }

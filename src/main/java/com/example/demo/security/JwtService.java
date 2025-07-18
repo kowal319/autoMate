@@ -10,7 +10,7 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final String secret = "your-256-bit-secret-your-256-bit-secret"; // musi mieć 256 bitów (min. 32 znaki)
+    private final String secret = "wN8s5Jf2vX1pZqL0rTeVmYcKbGdH7R4u"; // musi mieć 256 bitów (min. 32 znaki)
     private final long expirationMillis = 1000 * 60 * 60; // 1h
 
     private Key getSigningKey() {

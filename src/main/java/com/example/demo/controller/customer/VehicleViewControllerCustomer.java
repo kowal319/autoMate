@@ -87,6 +87,7 @@ public class VehicleViewControllerCustomer{
         List<VehicleInspection> inspections = vehicleInspectionService.getInspectionByVehicleId(id);
         model.addAttribute("inspections", inspections);
 
+
         return "customer/vehicle/vehicleInfo";
     }
 

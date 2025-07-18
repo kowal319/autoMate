@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").authenticated()
 
                         // 🌐 WebApp access
-                        .requestMatchers("/registration", "/customers/**", "/", "/images/**").permitAll()
+                        .requestMatchers("/registration", "registration-success", "/customers/**", "/", "/images/**", "/verify").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )

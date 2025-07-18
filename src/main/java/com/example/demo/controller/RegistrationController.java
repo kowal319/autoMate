@@ -38,6 +38,11 @@ public class RegistrationController {
         return "redirect:/login?registrationSuccess";
     }
 
+    @GetMapping("/registration-success")
+    public String registrationSuccess() {
+        return "registrationSuccess";
+    }
+
 
     @GetMapping("/login")
     public String shoHome(){
