@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -10,7 +11,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final String secret = "wN8s5Jf2vX1pZqL0rTeVmYcKbGdH7R4u"; // musi mieć 256 bitów (min. 32 znaki)
+    @Value("${jwt.secret}")
+    private String secret;
     private final long expirationMillis = 1000 * 60 * 60; // 1h
 
     private Key getSigningKey() {
