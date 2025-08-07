@@ -10,4 +10,6 @@ public class AutoMateApplication {
 		SpringApplication.run(AutoMateApplication.class, args);
 	}
 
+
+
 }
