@@ -124,33 +124,28 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>3.4.5</version>
 				<configuration>
+					<mainClass>com.example.demo.AutoMateApplication</mainClass>
 					<jvmArguments>-Ddebug -X</jvmArguments>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<release>17</release>
-
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<release>17</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>
